@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Midnight Clock</title>
+
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+			const clock = document.getElementById("clock");
+			setInterval(function() {
+				function n(num) {
+					return num.toString().padStart(2, "0");
+				}
+
+				function hourToTZ(num) {
+					if (num == 0)
+						return "UTC";
+					else if (num < 12)
+						return "UTC-" + n(num) + ":00";
+					else
+						return "UTC+" + n(24 - num) + ":00";
+				}
+
+				const dt = new Date();
+				var displayDT = dt;
+				if (dt.getUTCHours() >= 12)
+					displayDT.setDate(dt.getDate() + 1);
+				clock.innerText = dt.getUTCFullYear() +
+					"-" + n(dt.getUTCMonth() + 1) +
+					"-" + n(dt.getUTCDate()) +
+					" 00:" + n(dt.getUTCMinutes()) +
+					":" + n(dt.getUTCSeconds()) +
+					" " + hourToTZ(dt.getUTCHours());
+			}, 200);
+		}, false);
+	</script>
+</head>
+<body>
+	<div id="clock">(this site requires ECMAScript to work, sorry)</div>
+</body>
+</html>
